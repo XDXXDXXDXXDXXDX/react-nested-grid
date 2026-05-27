@@ -1,0 +1,67 @@
+{
+  "name": "react-nested-grid",
+  "version": "0.8.0",
+  "description": "A lightweight React component for rendering JSON-driven nested grid layouts.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": true,
+  "scripts": {
+    "build": "vite build && tsc && tsc-alias --dir dist",
+    "clean": "rm -rf dist",
+    "dev": "vite --host 127.0.0.1",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \"examples/**/*.{ts,tsx,css,html}\"",
+    "prepublishOnly": "npm run typecheck && npm run build",
+    "pub": "npm version patch && npm publish",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/XDXXDXXDXXDXXDX/react-nested-grid"
+  },
+  "keywords": [
+    "react",
+    "nested",
+    "grid",
+    "layout",
+    "tree",
+    "json",
+    "css-grid",
+    "dashboard",
+    "data-driven",
+    "declarative",
+    "component",
+    "visualization"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=18.0.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,css,html,json,md}": "prettier --write"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.29",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^6.0.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.8.3",
+    "react-dom": "^18.3.1",
+    "tsc-alias": "^1.8.17",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.14"
+  }
+}

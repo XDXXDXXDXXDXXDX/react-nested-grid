@@ -1,0 +1,91 @@
+.rng-root,
+.rng-root * {
+  box-sizing: border-box;
+}
+
+.rng-flex {
+  display: flex;
+}
+
+.rng-grid {
+  display: grid;
+  gap: 8px;
+  align-items: stretch;
+  height: 100%;
+}
+
+.rng-group {
+  height: 100%;
+  border: var(--rng-group-border, 1px solid #e5e7eb);
+  border-radius: var(--rng-group-border-radius, 8px);
+}
+
+.rng-depth-even > .rng-group {
+  background: var(--rng-group-bg-even, transparent);
+}
+
+.rng-depth-odd > .rng-group {
+  background: var(--rng-group-bg-odd, transparent);
+}
+
+.rng-group-header {
+  padding: var(--rng-group-header-padding, 8px 16px);
+}
+
+.rng-group-title {
+  color: var(--rng-group-title-color, inherit);
+  font-weight: var(--rng-group-title-font-weight, 600);
+  font-size: var(--rng-group-title-font-size, inherit);
+  line-height: 20px;
+}
+
+.rng-group-body {
+  flex: 1 1 auto;
+  padding: var(--rng-group-body-padding, 0 16px 8px);
+}
+
+.rng-item {
+  height: 100%;
+  padding: var(--rng-item-padding, 10px 12px);
+  border-radius: var(--rng-item-border-radius, 4px);
+  background: var(--rng-item-bg, #ffffff);
+  border: var(--rng-item-border, 1px solid #e5e7eb);
+  box-shadow: var(--rng-item-shadow, none);
+  transition:
+    background var(--rng-content-anim-duration, 200ms) cubic-bezier(0.4, 0, 0.2, 1),
+    color var(--rng-content-anim-duration, 200ms) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.rng-item-active {
+  background: var(--rng-item-hover-bg, #f3f4f6);
+  color: var(--rng-item-hover-color, inherit);
+}
+
+.rng-item-title {
+  font-weight: var(--rng-item-title-font-weight, 600);
+  font-size: var(--rng-item-title-font-size, inherit);
+}
+
+.rng-item-title-extra {
+  flex: 0 0 auto;
+}
+
+.rng-item-content-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--rng-content-anim-duration, 200ms)
+    cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.rng-item-content-panel-expanded {
+  grid-template-rows: 1fr;
+  padding-top: var(--rng-content-padding-top, 8px);
+}
+
+.rng-item-content {
+  min-height: 0;
+  overflow: hidden;
+  color: var(--rng-content-color, inherit);
+  font-size: var(--rng-content-font-size, 13px);
+  line-height: var(--rng-content-line-height, 20px);
+}
