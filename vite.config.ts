@@ -1,5 +1,8 @@
+import { fileURLToPath } from 'node:url'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
+
+const resolve = (p: string) => fileURLToPath(new URL(p, import.meta.url))
 
 export default defineConfig(({ command }) => {
   const isBuild = command === 'build'
@@ -11,18 +14,18 @@ export default defineConfig(({ command }) => {
       alias: [
         {
           find: /^react-nested-grid$/,
-          replacement: new URL('./src/index.ts', import.meta.url).pathname,
+          replacement: resolve('./src/index.ts'),
         },
         {
           find: 'src',
-          replacement: new URL('./src', import.meta.url).pathname,
+          replacement: resolve('./src'),
         },
       ],
     },
     build: isBuild
       ? {
           lib: {
-            entry: new URL('./src/index.ts', import.meta.url).pathname,
+            entry: resolve('./src/index.ts'),
             formats: ['es'],
             fileName: () => 'index.js',
           },

@@ -1,214 +1,35 @@
-import { NestedGrid, NestedGridGroup, NestedGridItem, type NestedGridNode } from 'react-nested-grid'
+import { useState } from 'react'
+import ProductCatalog from './product-catalog'
+import ArchitectureDiagram from './architecture-diagram'
 
-interface ProductData {
-  tag?: string
-  featured?: boolean
-}
-
-const catalog: NestedGridNode<ProductData>[] = [
-  {
-    id: 'mens',
-    title: "Men's Collection",
-    columns: 3,
-    children: [
-      {
-        id: 'tops',
-        title: 'Tops',
-        columns: 2,
-        span: 2,
-        children: [
-          {
-            id: 'shirts',
-            title: 'Shirts',
-            children: [
-              {
-                id: 'oxford',
-                title: 'Oxford Shirt',
-                content: 'Classic-fit, 100% cotton.',
-                data: { tag: 'Best Seller' },
-              },
-              {
-                id: 'linen',
-                title: 'Linen Shirt',
-                content: 'Relaxed-fit, breathable linen.',
-                data: { tag: 'New' },
-              },
-            ],
-          },
-          {
-            id: 'outerwear',
-            title: 'Outerwear',
-            children: [
-              {
-                id: 'bomber',
-                title: 'Bomber Jacket',
-                content: 'Lightweight nylon, ribbed trim.',
-                data: { featured: true },
-              },
-              {
-                id: 'trench',
-                title: 'Trench Coat',
-                content: 'Water-resistant cotton gabardine.',
-                data: { tag: 'Sale' },
-              },
-            ],
-          },
-        ],
-      },
-      {
-        id: 'accessories',
-        title: 'Accessories',
-        children: [
-          {
-            id: 'belt',
-            title: 'Leather Belt',
-            content: 'Full-grain Italian leather.',
-            data: { tag: 'New' },
-          },
-          {
-            id: 'watch',
-            title: 'Chronograph Watch',
-            content: 'Sapphire crystal, 42mm case.',
-            data: { featured: true },
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: 'womens',
-    title: "Women's Collection",
-    columns: 2,
-    children: [
-      {
-        id: 'dresses',
-        title: 'Dresses',
-        children: [
-          {
-            id: 'midi',
-            title: 'Midi Dress',
-            content: 'A-line silhouette, floral print.',
-            data: { tag: 'Best Seller' },
-          },
-          { id: 'maxi', title: 'Maxi Dress', content: 'Flowy rayon, adjustable waist.' },
-          {
-            id: 'wrap',
-            title: 'Wrap Dress',
-            content: 'Stretch jersey, true to size.',
-            data: { tag: 'Sale' },
-          },
-        ],
-      },
-      {
-        id: 'bags',
-        title: 'Bags',
-        children: [
-          {
-            id: 'tote',
-            title: 'Canvas Tote',
-            content: 'Reinforced handles, interior pocket.',
-            data: { featured: true },
-          },
-          {
-            id: 'crossbody',
-            title: 'Crossbody Bag',
-            content: 'Adjustable strap, pebbled leather.',
-            data: { tag: 'New' },
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: 'kids',
-    title: "Kids' Collection",
-    columns: 6,
-    children: [
-      {
-        id: 'onesie',
-        title: 'Cotton Onesie',
-        content: 'Soft, breathable fabric.',
-        data: { tag: 'Best Seller' },
-        span: 2,
-      },
-      {
-        id: 'romper',
-        title: 'Denim Romper',
-        content: 'Durable denim, adjustable straps.',
-        span: 2,
-      },
-      { id: 'sneakers', title: 'Kids Sneakers', content: 'Velcro straps, non-slip sole.', span: 2 },
-      {
-        id: 'backpack',
-        title: 'Mini Backpack',
-        content: 'Lightweight, multi compartments.',
-        span: 3,
-      },
-      {
-        id: 'sweater',
-        title: 'Knit Sweater',
-        content: 'Cozy acrylic blend, ribbed cuffs.',
-        span: 3,
-      },
-    ],
-  },
+const examples = [
+  { key: 'product-catalog', label: 'Product Catalog', Component: ProductCatalog },
+  { key: 'architecture-diagram', label: 'Architecture Diagram', Component: ArchitectureDiagram },
 ]
 
-const tagColors: Record<string, { bg: string; text: string }> = {
-  'Best Seller': { bg: '#fef3c7', text: '#92400e' },
-  New: { bg: '#dbeafe', text: '#1e40af' },
-  Sale: { bg: '#fce7f3', text: '#9d174d' },
-}
-
 export function App() {
+  const [active, setActive] = useState(examples[0].key)
+  const Example = examples.find((e) => e.key === active)!.Component
+
   return (
-    <NestedGrid
-      nodes={catalog}
-      groupGap={[16, 8]}
-      itemGap={8}
-      theme={{
-        groupBorder: 'none',
-        groupTitleColor: '#4338ca',
-        groupBgEven: '#eef2ff',
-        groupBgOdd: '#e0e7ff',
-        itemBorder: 'none',
-        itemShadow: '0 1px 3px rgb(0 0 0 / 8%)',
-        itemHoverBg: '#4338ca',
-        itemHoverColor: '#ffffff',
-        contentAnimDuration: '150ms',
-      }}
-      renderGroup={({ node, children }) => (
-        <NestedGridGroup node={node}>{children}</NestedGridGroup>
-      )}
-      renderItem={({ node }) => (
-        <NestedGridItem
-          node={node}
-          showContent={node.data?.featured}
-          titleExtra={
-            node.data?.tag
-              ? ({ expanded }) => {
-                  const c = tagColors[node.data!.tag!]
-                  return (
-                    <span
-                      style={{
-                        padding: '1px 8px',
-                        borderRadius: 999,
-                        fontSize: 11,
-                        fontWeight: 600,
-                        background: c.bg,
-                        color: c.text,
-                        opacity: expanded ? 1 : 0.7,
-                        transition: 'opacity 150ms',
-                      }}
-                    >
-                      {node.data!.tag}
-                    </span>
-                  )
-                }
-              : undefined
-          }
-        />
-      )}
-    />
+    <div className="app-layout">
+      <aside className="app-sidebar">
+        <h1 className="app-title">react-nested-grid</h1>
+        <nav className="app-nav">
+          {examples.map(({ key, label }) => (
+            <button
+              key={key}
+              className={`app-nav-btn${active === key ? ' app-nav-btn--active' : ''}`}
+              onClick={() => setActive(key)}
+            >
+              {label}
+            </button>
+          ))}
+        </nav>
+      </aside>
+      <main className="app-main">
+        <Example />
+      </main>
+    </div>
   )
 }
