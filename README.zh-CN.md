@@ -46,6 +46,8 @@ export function App() {
 }
 ```
 
+更多示例请查看 [`examples/`](./examples) 目录。
+
 ## 节点结构
 
 ```ts
@@ -133,7 +135,6 @@ import { NestedGrid, NestedGridGroup } from 'react-nested-grid'
 
 ```tsx
 import { NestedGridGroup, themeToVars } from 'react-nested-grid'
-
 ;<NestedGridGroup node={node} theme={{ groupBorder: '2px solid red' }}>
   ...
 </NestedGridGroup>
@@ -258,76 +259,3 @@ const theme: NestedGridTheme = {
   letter-spacing: 0.05em;
 }
 ```
-
-## Props 参考
-
-```ts
-interface NestedGridTheme {
-  groupBgEven?: CSSProperties['background']
-  groupBgOdd?: CSSProperties['background']
-  groupBorder?: CSSProperties['border']
-  groupBorderRadius?: CSSProperties['borderRadius']
-  groupTitleColor?: CSSProperties['color']
-  groupTitleFontSize?: CSSProperties['fontSize']
-  groupTitleFontWeight?: CSSProperties['fontWeight']
-  groupHeaderPadding?: CSSProperties['padding']
-  groupBodyPadding?: CSSProperties['padding']
-  itemBg?: CSSProperties['background']
-  itemBorder?: CSSProperties['border']
-  itemBorderRadius?: CSSProperties['borderRadius']
-  itemShadow?: CSSProperties['boxShadow']
-  itemPadding?: CSSProperties['padding']
-  itemHoverBg?: CSSProperties['background']
-  itemHoverColor?: CSSProperties['color']
-  itemTitleFontSize?: CSSProperties['fontSize']
-  itemTitleFontWeight?: CSSProperties['fontWeight']
-  contentColor?: CSSProperties['color']
-  contentFontSize?: CSSProperties['fontSize']
-  contentLineHeight?: CSSProperties['lineHeight']
-  contentPaddingTop?: CSSProperties['paddingTop']
-  contentAnimDuration?: string
-}
-
-interface NestedGridProps<TData = unknown> {
-  nodes: NestedGridNode<TData>[]
-  defaultColumns?: number // 默认 1
-  groupGap?: number | string | [number | string, number | string]
-  itemGap?: number | string | [number | string, number | string]
-  theme?: NestedGridTheme
-  className?: string
-  renderGroup?: (props: NestedGridGroupRenderProps<TData>) => ReactNode
-  renderItem?: (props: NestedGridItemRenderProps<TData>) => ReactNode
-}
-
-interface NestedGridGroupProps<TData = unknown> {
-  node: NestedGridNode<TData>
-  children: ReactNode
-  className?: string
-  style?: CSSProperties
-}
-
-interface NestedGridItemProps<TData = unknown> {
-  node: NestedGridNode<TData>
-  titleExtra?: ReactNode | ((props: { expanded: boolean }) => ReactNode)
-  showContent?: boolean
-  className?: string
-  style?: CSSProperties
-}
-```
-
-## 构建
-
-```bash
-npm install
-npm run build
-```
-
-使用 Vite library 模式构建，`tsc` 生成类型声明，`tsc-alias` 修复路径别名。样式内联到入口文件，使用者无需额外导入 CSS。
-
-## 本地开发
-
-```bash
-npm run dev
-```
-
-Vite 开发服务器指向 `examples` 目录。包名已别名到 `src/index.ts`，源码修改即时热更新，同时保持与真实使用方式一致。完整示例见 `examples/` 文件夹。
