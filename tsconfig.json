@@ -6,6 +6,7 @@
     "jsx": "react-jsx",
     "lib": ["DOM", "ES2019"],
     "strict": true,
+    "types": ["vitest/globals", "@testing-library/jest-dom"],
     "paths": {
       "react-nested-grid": ["./src/index.ts"],
       "src/*": ["./src/*"]
@@ -13,10 +14,7 @@
     "skipLibCheck": true,
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
-    "declaration": true,
-    "emitDeclarationOnly": true,
-    "declarationDir": "./dist",
     "rootDir": "src"
   },
-  "include": ["src"]
+  "include": ["src", "test"]
 }
