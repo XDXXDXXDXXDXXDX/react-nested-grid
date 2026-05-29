@@ -2,6 +2,7 @@ import { type CSSProperties, type HTMLAttributes, type ReactNode, useState } fro
 import { Flex } from 'src/components/Flex'
 import type { NestedGridNode, NestedGridTheme } from 'src/types'
 import { cx } from 'src/utils'
+import { useNestedGridContext } from '../NestedGrid/context'
 import { themeToVars } from '../NestedGrid/themeToVars'
 
 export interface NestedGridItemTitleExtraProps {
@@ -28,13 +29,15 @@ export interface NestedGridItemProps<TData = unknown> extends HTMLAttributes<HTM
 export function NestedGridItem<TData = unknown>({
   node,
   titleExtra,
-  showContent = false,
+  showContent: showContentProp,
   className,
   theme,
   style,
   styles,
   ...restProps
 }: NestedGridItemProps<TData>) {
+  const ctx = useNestedGridContext<TData>()
+  const showContent = showContentProp ?? ctx.showContent ?? false
   const [isActive, setIsActive] = useState(false)
   const hasContent = Boolean(node.content)
   const isExpanded = showContent || (isActive && hasContent)

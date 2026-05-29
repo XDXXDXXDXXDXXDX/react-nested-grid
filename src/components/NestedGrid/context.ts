@@ -6,6 +6,7 @@ export interface NestedGridContextValue<TData = unknown> {
   groupGap?: CSSProperties['gap']
   itemGap?: CSSProperties['gap']
   theme?: NestedGridTheme
+  showContent?: boolean
   onNodeClick?: NestedGridProps<TData>['onNodeClick']
   renderGroup?: NestedGridProps<TData>['renderGroup']
   renderItem?: NestedGridProps<TData>['renderItem']

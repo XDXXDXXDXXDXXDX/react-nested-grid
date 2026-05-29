@@ -1,6 +1,7 @@
 import './injectStyles'
 
 export { NestedGrid } from './components/NestedGrid'
+export { useNestedGridContext } from './components/NestedGrid/context'
 export { themeToVars } from './components/NestedGrid/themeToVars'
 export type { NestedGridGroupProps, NestedGridGroupStyles } from './components/NestedGridGroup'
 export { NestedGridGroup } from './components/NestedGridGroup'
