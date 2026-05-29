@@ -1,4 +1,4 @@
-import { type HTMLAttributes, type ReactNode, useState } from 'react'
+import { type CSSProperties, type HTMLAttributes, type ReactNode, useState } from 'react'
 import { Flex } from 'src/components/Flex'
 import type { NestedGridNode, NestedGridTheme } from 'src/types'
 import { cx } from 'src/utils'
@@ -12,11 +12,17 @@ export type NestedGridItemTitleExtra =
   | ReactNode
   | ((props: NestedGridItemTitleExtraProps) => ReactNode)
 
+export interface NestedGridItemStyles {
+  header?: CSSProperties
+  body?: CSSProperties
+}
+
 export interface NestedGridItemProps<TData = unknown> extends HTMLAttributes<HTMLDivElement> {
   node: NestedGridNode<TData>
   titleExtra?: NestedGridItemTitleExtra
   showContent?: boolean
   theme?: NestedGridTheme
+  styles?: NestedGridItemStyles
 }
 
 export function NestedGridItem<TData = unknown>({
@@ -26,6 +32,7 @@ export function NestedGridItem<TData = unknown>({
   className,
   theme,
   style,
+  styles,
   ...restProps
 }: NestedGridItemProps<TData>) {
   const [isActive, setIsActive] = useState(false)
@@ -46,7 +53,13 @@ export function NestedGridItem<TData = unknown>({
       onMouseEnter={() => setIsActive(true)}
       onMouseLeave={() => setIsActive(false)}
     >
-      <Flex align="center" justify="space-between" gap={8} className="rng-item-header">
+      <Flex
+        align="center"
+        justify="space-between"
+        gap={8}
+        className="rng-item-header"
+        style={styles?.header}
+      >
         {node.title && <div className="rng-item-title">{node.title}</div>}
         {hasTitleExtra && (
           <Flex align="center" gap={8} className="rng-item-title-extra">
@@ -56,7 +69,8 @@ export function NestedGridItem<TData = unknown>({
       </Flex>
       {hasContent && (
         <div
-          className={cx('rng-item-content-panel', isExpanded && 'rng-item-content-panel-expanded')}
+          className={cx('rng-item-body', isExpanded && 'rng-item-body-expanded')}
+          style={styles?.body}
         >
           <div className="rng-item-content">{node.content}</div>
         </div>

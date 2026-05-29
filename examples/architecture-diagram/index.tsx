@@ -61,13 +61,23 @@ export default function Example() {
           renderItem={({ node }) => <NestedGridItem node={node} titleExtra={dot('#10b981')} />}
         />
       </div>
-      <style>{`.vertical .rng-item-header { writing-mode: vertical-rl; transform: rotate(180deg); justify-content: center;}`}</style>
       <NestedGrid
-        className="vertical"
         nodes={infraNodes}
         style={{ flex: '0 0 100px' }}
         itemGap={8}
         theme={purple}
+        renderItem={({ node }) => (
+          <NestedGridItem
+            node={node}
+            styles={{
+              header: {
+                writingMode: 'vertical-rl',
+                transform: 'rotate(180deg)',
+                justifyContent: 'center',
+              },
+            }}
+          />
+        )}
       />
     </div>
   )

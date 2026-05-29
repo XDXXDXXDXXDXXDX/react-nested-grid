@@ -108,6 +108,7 @@ import { NestedGrid, NestedGridItem } from 'react-nested-grid'
 | `node`        | `NestedGridNode`                           | required | The node to render                        |
 | `titleExtra`  | `ReactNode \| ({ expanded }) => ReactNode` | —        | Content beside the title                  |
 | `showContent` | `boolean`                                  | `false`  | Always show content instead of hover-only |
+| `styles`      | `{ header?, body? }`                        | —        | Per-element inline styles                 |
 | `className`   | `string`                                   | —        | Additional CSS class                      |
 | `style`       | `CSSProperties`                            | —        | Inline styles                             |
 
@@ -131,8 +132,9 @@ import { NestedGrid, NestedGridGroup } from 'react-nested-grid'
 | ----------- | ---------------- | ------------------------ |
 | `node`      | `NestedGridNode` | The group node to render |
 | `children`  | `ReactNode`      | The rendered child grid  |
-| `className` | `string`         | Additional CSS class     |
-| `style`     | `CSSProperties`  | Inline styles            |
+| `styles`    | `{ header?, body? }`          | —                | Per-element inline styles |
+| `className` | `string`                      | —                | Additional CSS class      |
+| `style`     | `CSSProperties`               | —                | Inline styles             |
 
 ### themeToVars
 
@@ -265,7 +267,7 @@ All components expose stable `rng-*` class names. Override them directly when yo
   letter-spacing: 0.05em;
 }
 
-.rng-item-content-panel {
+.rng-item-body {
   transition-duration: 150ms;
 }
 

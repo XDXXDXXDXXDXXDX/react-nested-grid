@@ -109,6 +109,7 @@ import { NestedGrid, NestedGridItem } from 'react-nested-grid'
 | `titleExtra`  | `ReactNode \| ({ expanded }) => ReactNode` | —       | 标题旁的额外内容                  |
 | `showContent` | `boolean`                                  | `false` | 始终展示内容，而非仅 hover 时展示 |
 |  |
+| `styles`      | `{ header?, body? }`                        | —       | 子元素内联样式                    |
 | `className`   | `string`                                   | —       | 附加 CSS 类名                     |
 | `style`       | `CSSProperties`                            | —       | 内联样式                          |
 
@@ -132,8 +133,9 @@ import { NestedGrid, NestedGridGroup } from 'react-nested-grid'
 | ----------- | ---------------- | ---------------- |
 | `node`      | `NestedGridNode` | 要渲染的分组节点 |
 | `children`  | `ReactNode`      | 已渲染的子网格   |
-| `className` | `string`         | 附加 CSS 类名    |
-| `style`     | `CSSProperties`  | 内联样式         |
+| `styles`    | `{ header?, body? }`          | —                | 子元素内联样式   |
+| `className` | `string`                      | —                | 附加 CSS 类名    |
+| `style`     | `CSSProperties`               | —                | 内联样式         |
 
 ### themeToVars
 

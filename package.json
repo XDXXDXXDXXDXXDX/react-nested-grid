@@ -1,6 +1,6 @@
 {
   "name": "react-nested-grid",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "description": "A lightweight React component for rendering JSON-driven nested grid layouts.",
   "type": "module",
   "main": "./dist/index.js",

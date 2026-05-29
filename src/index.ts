@@ -2,10 +2,11 @@ import './injectStyles'
 
 export { NestedGrid } from './components/NestedGrid'
 export { themeToVars } from './components/NestedGrid/themeToVars'
-export type { NestedGridGroupProps } from './components/NestedGridGroup'
+export type { NestedGridGroupProps, NestedGridGroupStyles } from './components/NestedGridGroup'
 export { NestedGridGroup } from './components/NestedGridGroup'
 export type {
   NestedGridItemProps,
+  NestedGridItemStyles,
   NestedGridItemTitleExtra,
   NestedGridItemTitleExtraProps,
 } from './components/NestedGridItem'
