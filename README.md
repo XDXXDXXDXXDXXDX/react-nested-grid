@@ -59,6 +59,7 @@ interface NestedGridNode<TData = unknown> {
   columns?: number
   span?: number
   rowSpan?: number
+  virtual?: boolean
   data?: TData
 }
 ```
@@ -67,6 +68,7 @@ interface NestedGridNode<TData = unknown> {
 - `columns` sets how many columns the node's child grid uses. Falls back to `defaultColumns` (default `1`).
 - `span` makes the node span multiple columns in its parent grid.
 - `rowSpan` makes the node span multiple rows in its parent grid.
+- `virtual` makes the node layout-only — no group wrapper is rendered, children are placed directly. Useful for root nodes that only provide `columns` for child grid layout.
 - `data` is an arbitrary payload passed through to render callbacks.
 
 ## Components

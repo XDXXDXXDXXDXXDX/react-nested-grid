@@ -40,6 +40,7 @@ export interface NestedGridNode<TData = unknown> {
   columns?: number
   span?: number
   rowSpan?: number
+  virtual?: boolean
   data?: TData
 }
 

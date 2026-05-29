@@ -9,6 +9,7 @@ export const nodes: NestedGridNode<ProductData>[] = [
   {
     id: 'root',
     columns: 8,
+    virtual: true,
     children: [
       {
         id: 'mens',

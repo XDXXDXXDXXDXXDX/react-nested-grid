@@ -66,10 +66,32 @@ function NodeRenderer<TData = unknown>({ node, depth, index, parent }: NodeRende
       />
     )
 
+    if (node.virtual) {
+      return (
+        <div
+          className={cellClass}
+          style={cellStyle}
+          onClick={(e) => {
+            e.stopPropagation()
+            onNodeClick?.(node)
+          }}
+        >
+          {renderedChildren}
+        </div>
+      )
+    }
+
     const defaultGroup = <NestedGridGroup node={node}>{renderedChildren}</NestedGridGroup>
 
     return (
-      <div className={cellClass} style={cellStyle} onClick={() => onNodeClick?.(node)}>
+      <div
+        className={cellClass}
+        style={cellStyle}
+        onClick={(e) => {
+          e.stopPropagation()
+          onNodeClick?.(node)
+        }}
+      >
         {renderGroup
           ? renderGroup({
               node,
@@ -87,7 +109,14 @@ function NodeRenderer<TData = unknown>({ node, depth, index, parent }: NodeRende
   const defaultItem = <NestedGridItem node={node} />
 
   return (
-    <div className={cellClass} style={cellStyle} onClick={() => onNodeClick?.(node)}>
+    <div
+      className={cellClass}
+      style={cellStyle}
+      onClick={(e) => {
+        e.stopPropagation()
+        onNodeClick?.(node)
+      }}
+    >
       {renderItem
         ? renderItem({
             node,

@@ -59,6 +59,7 @@ interface NestedGridNode<TData = unknown> {
   columns?: number
   span?: number
   rowSpan?: number
+  virtual?: boolean
   data?: TData
 }
 ```
@@ -67,6 +68,7 @@ interface NestedGridNode<TData = unknown> {
 - `columns` 设置该节点子网格的列数，未设置时回退到 `defaultColumns`（默认 `1`）。
 - `span` 让节点在父级网格中跨多列。
 - `rowSpan` 让节点在父级网格中跨多行。
+- `virtual` 设为 true 时该节点仅用于布局，不渲染分组容器，子节点直接放入网格。适用于仅提供 `columns` 的根节点。
 - `data` 为自定义数据，透传到渲染回调中。
 
 ## 组件
