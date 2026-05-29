@@ -9,6 +9,7 @@ export interface NestedGridTheme {
   groupTitleColor?: CSSProperties['color']
   groupTitleFontSize?: CSSProperties['fontSize']
   groupTitleFontWeight?: CSSProperties['fontWeight']
+  groupPadding?: CSSProperties['padding']
   groupHeaderPadding?: CSSProperties['padding']
   groupBodyPadding?: CSSProperties['padding']
 
@@ -38,6 +39,7 @@ export interface NestedGridNode<TData = unknown> {
   children?: NestedGridNode<TData>[]
   columns?: number
   span?: number
+  rowSpan?: number
   data?: TData
 }
 

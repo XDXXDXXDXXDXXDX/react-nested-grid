@@ -58,6 +58,7 @@ interface NestedGridNode<TData = unknown> {
   children?: NestedGridNode<TData>[]
   columns?: number
   span?: number
+  rowSpan?: number
   data?: TData
 }
 ```
@@ -65,6 +66,7 @@ interface NestedGridNode<TData = unknown> {
 - 有 `children` 的节点为**分组**（group）；没有 `children` 的为**条目**（item）。
 - `columns` 设置该节点子网格的列数，未设置时回退到 `defaultColumns`（默认 `1`）。
 - `span` 让节点在父级网格中跨多列。
+- `rowSpan` 让节点在父级网格中跨多行。
 - `data` 为自定义数据，透传到渲染回调中。
 
 ## 组件
@@ -213,8 +215,9 @@ const theme: NestedGridTheme = {
 | `groupTitleColor`            | `color`                 | —                   |
 | `groupTitleFontSize`         | `font-size`             | —                   |
 | `groupTitleFontWeight`       | `font-weight`           | `600`               |
-| `groupHeaderPadding`         | `padding`               | `8px 16px`          |
-| `groupBodyPadding`           | `padding`               | `0 16px 8px`        |
+| `groupPadding`               | `padding`               | `8px 16px`          |
+| `groupHeaderPadding`         | `padding`               | `0`                 |
+| `groupBodyPadding`           | `padding`               | `8px 0 0`           |
 | `itemBorder`                 | `border`                | `1px solid #e5e7eb` |
 | `itemBorderRadius`           | `border-radius`         | `4px`               |
 | `itemBg`                     | `background`            | `#ffffff`           |

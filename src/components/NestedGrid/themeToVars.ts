@@ -9,6 +9,7 @@ const MAP: Record<keyof NestedGridTheme, string> = {
   groupTitleColor: '--rng-group-title-color',
   groupTitleFontSize: '--rng-group-title-font-size',
   groupTitleFontWeight: '--rng-group-title-font-weight',
+  groupPadding: '--rng-group-padding',
   groupHeaderPadding: '--rng-group-header-padding',
   groupBodyPadding: '--rng-group-body-padding',
   itemBg: '--rng-item-bg',

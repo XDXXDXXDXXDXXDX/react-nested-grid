@@ -16,6 +16,7 @@
 
 .rng-group {
   height: 100%;
+  padding: var(--rng-group-padding, 8px 16px);
   border: var(--rng-group-border, 1px solid #e5e7eb);
   border-radius: var(--rng-group-border-radius, 8px);
 }
@@ -29,7 +30,7 @@
 }
 
 .rng-group-header {
-  padding: var(--rng-group-header-padding, 8px 16px);
+  padding: var(--rng-group-header-padding, 0);
 }
 
 .rng-group-title {
@@ -41,7 +42,7 @@
 
 .rng-group-body {
   flex: 1 1 auto;
-  padding: var(--rng-group-body-padding, 0 16px 8px);
+  padding: var(--rng-group-body-padding, 8px 0 0);
 }
 
 .rng-item {

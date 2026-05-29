@@ -1,11 +1,17 @@
 import { NestedGrid, NestedGridGroup, NestedGridItem } from 'react-nested-grid'
-import { catalog, highlights, tagColors, type ProductData } from './data'
+import { nodes, type ProductData, tagColors } from './data'
+
+const verticalCss = `.vertical .rng-item-header {
+  writing-mode: vertical-rl; transform: rotate(180deg); justify-content: center;
+  min-height: 80px;
+}`
 
 export default function Example() {
   return (
-    <div style={{ display: 'flex', gap: 16 }}>
+    <>
+      <style>{verticalCss}</style>
       <NestedGrid
-        nodes={catalog}
+        nodes={nodes}
         groupGap={[16, 8]}
         itemGap={8}
         theme={{
@@ -19,9 +25,16 @@ export default function Example() {
           itemHoverColor: '#ffffff',
           contentAnimDuration: '150ms',
         }}
-        renderGroup={({ node, children }) => (
-          <NestedGridGroup node={node}>{children}</NestedGridGroup>
-        )}
+        renderGroup={({ node, children }) => {
+          return (
+            <NestedGridGroup
+              node={node}
+              className={node.id === 'highlights' ? 'vertical' : undefined}
+            >
+              {children}
+            </NestedGridGroup>
+          )
+        }}
         renderItem={({ node }) => (
           <NestedGridItem
             node={node}
@@ -52,22 +65,6 @@ export default function Example() {
           />
         )}
       />
-      <style>{`.vertical .rng-item-header { writing-mode: vertical-rl; transform: rotate(180deg); justify-content: center; }`}</style>
-      <NestedGrid
-        className="vertical"
-        nodes={highlights}
-        style={{ flex: '0 0 100px' }}
-        itemGap={8}
-        theme={{
-          groupBorder: 'none',
-          groupTitleColor: '#4338ca',
-          groupBgEven: '#eef2ff',
-          itemBorder: 'none',
-          itemHoverBg: '#4338ca',
-          itemHoverColor: '#ffffff',
-          itemTitleFontSize: '14px',
-        }}
-      />
-    </div>
+    </>
   )
 }

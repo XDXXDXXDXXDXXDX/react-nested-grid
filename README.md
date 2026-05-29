@@ -58,6 +58,7 @@ interface NestedGridNode<TData = unknown> {
   children?: NestedGridNode<TData>[]
   columns?: number
   span?: number
+  rowSpan?: number
   data?: TData
 }
 ```
@@ -65,6 +66,7 @@ interface NestedGridNode<TData = unknown> {
 - A node with `children` is a **group**; without `children` it is an **item**.
 - `columns` sets how many columns the node's child grid uses. Falls back to `defaultColumns` (default `1`).
 - `span` makes the node span multiple columns in its parent grid.
+- `rowSpan` makes the node span multiple rows in its parent grid.
 - `data` is an arbitrary payload passed through to render callbacks.
 
 ## Components
@@ -213,8 +215,9 @@ const theme: NestedGridTheme = {
 | `groupTitleColor`            | `color`                  | —                   |
 | `groupTitleFontSize`         | `font-size`              | —                   |
 | `groupTitleFontWeight`       | `font-weight`            | `600`               |
-| `groupHeaderPadding`         | `padding`                | `8px 16px`          |
-| `groupBodyPadding`           | `padding`                | `0 16px 8px`        |
+| `groupPadding`               | `padding`                | `8px 16px`          |
+| `groupHeaderPadding`         | `padding`                | `0`                 |
+| `groupBodyPadding`           | `padding`                | `8px 0 0`           |
 | `itemBorder`                 | `border`                 | `1px solid #e5e7eb` |
 | `itemBorderRadius`           | `border-radius`          | `4px`               |
 | `itemBg`                     | `background`             | `#ffffff`           |

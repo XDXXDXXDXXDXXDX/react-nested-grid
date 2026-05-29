@@ -49,8 +49,10 @@ interface NodeRendererProps<TData = unknown> {
 
 function NodeRenderer<TData = unknown>({ node, depth, index, parent }: NodeRendererProps<TData>) {
   const { renderGroup, renderItem } = useNestedGridContext<TData>()
-  const cellStyle: CSSProperties =
-    node.span === undefined ? {} : { gridColumn: `span ${node.span}` }
+  const cellStyle: CSSProperties = {
+    ...(node.span && { gridColumn: `span ${node.span}` }),
+    ...(node.rowSpan && { gridRow: `span ${node.rowSpan}` }),
+  }
   const depthClass = `rng-depth-${depth} ${depth % 2 === 0 ? 'rng-depth-even' : 'rng-depth-odd'}`
   const cellClass = `rng-node ${depthClass}`
 

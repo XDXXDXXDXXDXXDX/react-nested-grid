@@ -49,7 +49,9 @@
     "component",
     "visualization",
     "layer",
-    "hierarchy"
+    "hierarchy",
+    "lite",
+    "css"
   ],
   "license": "MIT",
   "peerDependencies": {
