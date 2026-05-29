@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react'
 import type { NestedGridTheme } from 'src/types'
 
 const MAP: Record<keyof NestedGridTheme, string> = {
+  groupBg: '--rng-group-bg',
   groupBgEven: '--rng-group-bg-even',
   groupBgOdd: '--rng-group-bg-odd',
   groupBorder: '--rng-group-border',

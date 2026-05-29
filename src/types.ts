@@ -2,6 +2,7 @@ import type { CSSProperties, HTMLAttributes, Key, ReactNode } from 'react'
 
 export interface NestedGridTheme {
   // Group
+  groupBg?: CSSProperties['background']
   groupBgEven?: CSSProperties['background']
   groupBgOdd?: CSSProperties['background']
   groupBorder?: CSSProperties['border']

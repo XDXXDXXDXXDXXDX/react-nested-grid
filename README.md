@@ -216,6 +216,7 @@ const theme: NestedGridTheme = {
 | ---------------------------- | ------------------------ | ------------------- |
 | `groupBorder`                | `border`                 | `1px solid #e5e7eb` |
 | `groupBorderRadius`          | `border-radius`          | `8px`               |
+| `groupBg`                    | `background`             | —                   |
 | `groupBgEven` / `groupBgOdd` | `background`             | —                   |
 | `groupTitleColor`            | `color`                  | —                   |
 | `groupTitleFontSize`         | `font-size`              | —                   |
