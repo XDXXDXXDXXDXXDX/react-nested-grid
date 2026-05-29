@@ -4,6 +4,14 @@ A lightweight React component for rendering JSON-driven nested grid layouts.
 
 ![demo](./examples/example.png)
 
+Build architecture maps, grouped catalogs, and other hierarchical layouts directly from JSON.
+
+Best for:
+
+- Nested dashboards and grouped panels
+- Architecture or topology-like views
+- Catalog, gallery, and hierarchy UIs
+
 ## Install
 
 ```bash

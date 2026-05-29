@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import ArchitectureDiagram from './architecture-diagram'
+import PhotoWall from './photo-wall'
 import ProductCatalog from './product-catalog'
 
 const examples = [
   { key: 'product-catalog', label: 'Product Catalog', Component: ProductCatalog },
   { key: 'architecture-diagram', label: 'Architecture Diagram', Component: ArchitectureDiagram },
+  { key: 'photo-wall', label: 'Photo Wall', Component: PhotoWall },
 ]
 
 export function App() {
