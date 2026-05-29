@@ -22,10 +22,14 @@
     "clean": "rm -rf dist",
     "dev": "vite --host 127.0.0.1",
     "typecheck": "tsc --noEmit",
-    "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \"examples/**/*.{ts,tsx,css,html}\"",
+    "format": "biome format --write",
+    "lint": "biome check",
     "prepublishOnly": "npm run typecheck && npm run build",
     "pub": "npm version patch && npm publish",
     "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,css,json,md}": "biome format --write --no-errors-on-unmatched"
   },
   "repository": {
     "type": "git",
@@ -51,17 +55,14 @@
   "peerDependencies": {
     "react": ">=18.0.0"
   },
-  "lint-staged": {
-    "*.{ts,tsx,css,html,json,md}": "prettier --write"
-  },
   "devDependencies": {
+    "@biomejs/biome": "^2.4.16",
     "@types/node": "^25.9.1",
     "@types/react": "^18.3.29",
     "@types/react-dom": "^18.3.7",
     "@vitejs/plugin-react": "^6.0.2",
     "husky": "^9.1.7",
-    "lint-staged": "^16.4.0",
-    "prettier": "^3.8.3",
+    "lint-staged": "^17.0.5",
     "react-dom": "^18.3.1",
     "tsc-alias": "^1.8.17",
     "typescript": "^6.0.3",
