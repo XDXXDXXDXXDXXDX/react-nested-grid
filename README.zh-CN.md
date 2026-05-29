@@ -81,6 +81,7 @@ interface NestedGridNode<TData = unknown> {
   defaultColumns={3}
   groupGap={12}
   itemGap={8}
+  onNodeClick={(node) => console.log(node.id)}
   renderGroup={...}
   renderItem={...}
 />
@@ -105,6 +106,7 @@ import { NestedGrid, NestedGridItem } from 'react-nested-grid'
 | `node`        | `NestedGridNode`                           | 必填    | 要渲染的节点                      |
 | `titleExtra`  | `ReactNode \| ({ expanded }) => ReactNode` | —       | 标题旁的额外内容                  |
 | `showContent` | `boolean`                                  | `false` | 始终展示内容，而非仅 hover 时展示 |
+|  |
 | `className`   | `string`                                   | —       | 附加 CSS 类名                     |
 | `style`       | `CSSProperties`                            | —       | 内联样式                          |
 

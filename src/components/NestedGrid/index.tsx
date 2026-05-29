@@ -12,6 +12,7 @@ export function NestedGrid<TData = unknown>({
   groupGap,
   itemGap,
   theme,
+  onNodeClick,
   className,
   renderGroup,
   renderItem,
@@ -23,6 +24,7 @@ export function NestedGrid<TData = unknown>({
     groupGap: toCssSize(groupGap),
     itemGap: toCssSize(itemGap),
     theme,
+    onNodeClick,
     renderGroup,
     renderItem,
   }

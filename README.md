@@ -81,6 +81,7 @@ The root component. Accepts a `nodes` array and renders the full nested grid.
   defaultColumns={3}
   groupGap={12}
   itemGap={8}
+  onNodeClick={(node) => console.log(node.id)}
   renderGroup={...}
   renderItem={...}
 />

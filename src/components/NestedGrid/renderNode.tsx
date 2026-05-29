@@ -48,7 +48,7 @@ interface NodeRendererProps<TData = unknown> {
 }
 
 function NodeRenderer<TData = unknown>({ node, depth, index, parent }: NodeRendererProps<TData>) {
-  const { renderGroup, renderItem } = useNestedGridContext<TData>()
+  const { renderGroup, renderItem, onNodeClick } = useNestedGridContext<TData>()
   const cellStyle: CSSProperties = {
     ...(node.span && { gridColumn: `span ${node.span}` }),
     ...(node.rowSpan && { gridRow: `span ${node.rowSpan}` }),
@@ -69,7 +69,7 @@ function NodeRenderer<TData = unknown>({ node, depth, index, parent }: NodeRende
     const defaultGroup = <NestedGridGroup node={node}>{renderedChildren}</NestedGridGroup>
 
     return (
-      <div className={cellClass} style={cellStyle}>
+      <div className={cellClass} style={cellStyle} onClick={() => onNodeClick?.(node)}>
         {renderGroup
           ? renderGroup({
               node,
@@ -84,19 +84,19 @@ function NodeRenderer<TData = unknown>({ node, depth, index, parent }: NodeRende
     )
   }
 
+  const defaultItem = <NestedGridItem node={node} />
+
   return (
-    <div className={cellClass} style={cellStyle}>
-      {renderItem ? (
-        renderItem({
-          node,
-          depth,
-          index,
-          parent,
-          oriNode: <NestedGridItem node={node} />,
-        })
-      ) : (
-        <NestedGridItem node={node} />
-      )}
+    <div className={cellClass} style={cellStyle} onClick={() => onNodeClick?.(node)}>
+      {renderItem
+        ? renderItem({
+            node,
+            depth,
+            index,
+            parent,
+            oriNode: defaultItem,
+          })
+        : defaultItem}
     </div>
   )
 }

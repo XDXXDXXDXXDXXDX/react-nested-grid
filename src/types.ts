@@ -65,6 +65,7 @@ export interface NestedGridProps<TData = unknown> extends HTMLAttributes<HTMLDiv
   groupGap?: number | string | [number | string, number | string]
   itemGap?: number | string | [number | string, number | string]
   theme?: NestedGridTheme
+  onNodeClick?: (node: NestedGridNode<TData>) => void
   renderGroup?: (props: NestedGridGroupRenderProps<TData>) => ReactNode
   renderItem?: (props: NestedGridItemRenderProps<TData>) => ReactNode
 }
