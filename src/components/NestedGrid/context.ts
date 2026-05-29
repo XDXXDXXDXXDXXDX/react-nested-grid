@@ -1,4 +1,4 @@
-import { createContext, useContext, type CSSProperties } from 'react'
+import { type CSSProperties, createContext, useContext } from 'react'
 import type { NestedGridProps, NestedGridTheme } from 'src/types'
 
 export interface NestedGridContextValue<TData = unknown> {

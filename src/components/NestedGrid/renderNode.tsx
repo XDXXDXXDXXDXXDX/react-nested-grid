@@ -1,9 +1,9 @@
 import type { CSSProperties } from 'react'
-import type { NestedGridNode } from 'src/types'
-import { NestedGridItem } from 'src/components/NestedGridItem'
 import { NestedGridGroup } from 'src/components/NestedGridGroup'
-import { hasChildren } from './utils'
+import { NestedGridItem } from 'src/components/NestedGridItem'
+import type { NestedGridNode } from 'src/types'
 import { useNestedGridContext } from './context'
+import { hasChildren } from './utils'
 
 export interface NestedGridNodesProps<TData = unknown> {
   nodes: NestedGridNode<TData>[]

@@ -1,15 +1,15 @@
 import './injectStyles'
 
 export { NestedGrid } from './components/NestedGrid'
-export { NestedGridItem } from './components/NestedGridItem'
-export { NestedGridGroup } from './components/NestedGridGroup'
 export { themeToVars } from './components/NestedGrid/themeToVars'
+export type { NestedGridGroupProps } from './components/NestedGridGroup'
+export { NestedGridGroup } from './components/NestedGridGroup'
 export type {
   NestedGridItemProps,
   NestedGridItemTitleExtra,
   NestedGridItemTitleExtraProps,
 } from './components/NestedGridItem'
-export type { NestedGridGroupProps } from './components/NestedGridGroup'
+export { NestedGridItem } from './components/NestedGridItem'
 export type {
   NestedGridGroupRenderProps,
   NestedGridItemRenderProps,

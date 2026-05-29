@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import ProductCatalog from './product-catalog'
 import ArchitectureDiagram from './architecture-diagram'
+import ProductCatalog from './product-catalog'
 
 const examples = [
   { key: 'product-catalog', label: 'Product Catalog', Component: ProductCatalog },

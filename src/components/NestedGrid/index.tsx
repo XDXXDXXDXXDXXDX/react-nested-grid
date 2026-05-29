@@ -1,7 +1,7 @@
 import type { NestedGridProps } from 'src/types'
 import { cx, toCssSize } from 'src/utils'
-import { NestedGridNodes } from './renderNode'
 import { NestedGridContext, type NestedGridContextValue } from './context'
+import { NestedGridNodes } from './renderNode'
 import { themeToVars } from './themeToVars'
 
 const DEFAULT_COLUMNS = 1

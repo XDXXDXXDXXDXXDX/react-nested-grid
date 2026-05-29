@@ -1,5 +1,5 @@
 import { NestedGrid, NestedGridItem, type NestedGridTheme } from 'react-nested-grid'
-import { frontendNodes, backendNodes, infraNodes } from './data'
+import { backendNodes, frontendNodes, infraNodes } from './data'
 
 const dot = (color: string) => (
   <span style={{ width: 7, height: 7, borderRadius: '50%', background: color, flexShrink: 0 }} />

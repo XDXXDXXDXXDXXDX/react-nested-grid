@@ -1,5 +1,5 @@
 import type { CSSProperties, HTMLAttributes } from 'react'
-import { cx, toCssSize, type CssSize } from 'src/utils'
+import { type CssSize, cx, toCssSize } from 'src/utils'
 
 export interface FlexProps extends HTMLAttributes<HTMLDivElement> {
   vertical?: boolean
