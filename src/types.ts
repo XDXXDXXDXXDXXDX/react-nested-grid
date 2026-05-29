@@ -37,13 +37,16 @@ export interface NestedGridNode<TData = unknown> {
   id: Key
   title?: ReactNode
   content?: ReactNode
+
   children?: NestedGridNode<TData>[]
   columns?: number | string
+  gridStyle?: CSSProperties
+  virtual?: boolean
+
   span?: number
   rowSpan?: number
-  virtual?: boolean
-  gridStyle?: CSSProperties
   cellStyle?: CSSProperties
+
   data?: TData
 }
 

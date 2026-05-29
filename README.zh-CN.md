@@ -52,16 +52,23 @@ export function App() {
 
 ```ts
 interface NestedGridNode<TData = unknown> {
+  // 身份 & 内容
   id: React.Key
   title?: React.ReactNode
   content?: React.ReactNode
+
+  // 子节点 & 子网格
   children?: NestedGridNode<TData>[]
   columns?: number | string
+  gridStyle?: CSSProperties
+  virtual?: boolean
+
+  // 在父网格中的位置
   span?: number
   rowSpan?: number
-  virtual?: boolean
-  gridStyle?: CSSProperties
   cellStyle?: CSSProperties
+
+  // 自定义数据
   data?: TData
 }
 ```
@@ -69,13 +76,14 @@ interface NestedGridNode<TData = unknown> {
 - 有 `children` 的为**分组**（group），没有的为**条目**（item）。
 - `title` 显示在 group 或 item 的头部。可选 — 没有标题的节点仍参与布局。
 - `content` 默认隐藏，hover 时展开（仅 item 有效）。使用 `showContent` 可始终显示。
-- `columns` 设置节点子网格的 `grid-template-columns`。`number` 为 `repeat(n, minmax(0, 1fr))` 快捷方式。传 `string` 可使用任意 CSS 值（如 `"200px 1fr 1fr"`）。未设时回退到 `defaultColumns`（默认 `1`）。
+- `children` 为此 group 包含的子节点列表。
+- `columns` 设置子网格的 `grid-template-columns`。`number` 为 `repeat(n, minmax(0, 1fr))` 快捷方式。传 `string` 可使用任意 CSS 值（如 `"200px 1fr 1fr"`）。未设时回退到 `defaultColumns`（默认 `1`）。
+- `gridStyle` 向子网格容器透传额外 CSS 属性（如 `gridAutoRows`、`alignItems`）。在 `columns` 和 `gap` 之后合并。
+- `virtual` 设为 true 时该节点仅用于布局，不渲染 group 包装，子节点直接放入网格单元。
 - `span` 让节点在父网格中跨多列。映射为 `gridColumn: span {n}`。
 - `rowSpan` 让节点在父网格中跨多行。映射为 `gridRow: span {n}`。
-- `virtual` 设为 true 时该节点仅用于布局，不渲染 group 包装，子节点直接放入网格单元。适合仅提供 `columns` 的根节点。
-- `gridStyle` 向子网格容器透传额外 CSS 属性（如 `gridAutoRows`、`alignItems`）。在 `columns`、`gap` 之后合并。
 - `cellStyle` 向单元容器透传额外 CSS 属性（如 `alignSelf`、`justifySelf`、`order`）。在 `span` / `rowSpan` 之后合并。
-- `data` 为自定义数据，透传到 `renderItem` / `renderGroup` 回调中，通过 `node.data` 访问。
+- `data` 为自定义数据，透传到渲染回调。
 
 ## 使用
 

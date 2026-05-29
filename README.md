@@ -52,16 +52,23 @@ More examples in [`examples/`](./examples).
 
 ```ts
 interface NestedGridNode<TData = unknown> {
+  // Identity & content
   id: React.Key
   title?: React.ReactNode
   content?: React.ReactNode
+
+  // Children & their grid
   children?: NestedGridNode<TData>[]
   columns?: number | string
+  gridStyle?: CSSProperties
+  virtual?: boolean
+
+  // Position in parent grid
   span?: number
   rowSpan?: number
-  virtual?: boolean
-  gridStyle?: CSSProperties
   cellStyle?: CSSProperties
+
+  // Payload
   data?: TData
 }
 ```
@@ -69,13 +76,14 @@ interface NestedGridNode<TData = unknown> {
 - A node with `children` is a **group**; without `children` it is an **item**.
 - `title` is shown in the group header or item header. Optional — nodes without a title still participate in layout.
 - `content` is hidden by default and expands on hover (items only). Use `showContent` to keep it always visible.
-- `columns` sets `grid-template-columns` of the node's child grid. A `number` is shorthand for `repeat(n, minmax(0, 1fr))`. Pass a `string` for any valid CSS value (e.g. `"200px 1fr 1fr"`). Falls back to `defaultColumns` (default `1`).
+- `children` is the nested node list for this group.
+- `columns` sets `grid-template-columns` of the child grid. A `number` is shorthand for `repeat(n, minmax(0, 1fr))`. Pass a `string` for any valid CSS value (e.g. `"200px 1fr 1fr"`). Falls back to `defaultColumns` (default `1`).
+- `gridStyle` passes additional CSS properties to the child grid container (e.g. `gridAutoRows`, `alignItems`). Merged after `columns` and `gap`.
+- `virtual` makes the node layout-only — no group wrapper is rendered, children are placed directly in the cell.
 - `span` makes the node span multiple columns in its parent grid. Maps to `gridColumn: span {n}`.
 - `rowSpan` makes the node span multiple rows in its parent grid. Maps to `gridRow: span {n}`.
-- `virtual` makes the node layout-only — no group wrapper is rendered, children are placed directly in the cell. Useful for root nodes that only provide a `columns` grid.
-- `gridStyle` passes additional CSS properties to the child grid container (e.g. `gridAutoRows`, `alignItems`). Merged after `columns`, `gap`, etc.
 - `cellStyle` passes additional CSS properties to the cell wrapper (e.g. `alignSelf`, `justifySelf`, `order`). Merged after `span` / `rowSpan`.
-- `data` is an arbitrary payload forwarded to render callbacks. Access it via `node.data` in `renderItem`/`renderGroup`.
+- `data` is an arbitrary payload forwarded to render callbacks.
 
 ## Usage
 
