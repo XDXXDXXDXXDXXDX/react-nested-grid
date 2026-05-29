@@ -46,7 +46,7 @@ export function App() {
 }
 ```
 
-For more examples, see the [`examples/`](./examples) directory.
+More examples in [`examples/`](./examples).
 
 ## Node Schema
 
@@ -56,26 +56,32 @@ interface NestedGridNode<TData = unknown> {
   title?: React.ReactNode
   content?: React.ReactNode
   children?: NestedGridNode<TData>[]
-  columns?: number
+  columns?: number | string
   span?: number
   rowSpan?: number
   virtual?: boolean
+  gridStyle?: CSSProperties
+  cellStyle?: CSSProperties
   data?: TData
 }
 ```
 
 - A node with `children` is a **group**; without `children` it is an **item**.
-- `columns` sets how many columns the node's child grid uses. Falls back to `defaultColumns` (default `1`).
-- `span` makes the node span multiple columns in its parent grid.
-- `rowSpan` makes the node span multiple rows in its parent grid.
-- `virtual` makes the node layout-only — no group wrapper is rendered, children are placed directly. Useful for root nodes that only provide `columns` for child grid layout.
-- `data` is an arbitrary payload passed through to render callbacks.
+- `title` is shown in the group header or item header. Optional — nodes without a title still participate in layout.
+- `content` is hidden by default and expands on hover (items only). Use `showContent` to keep it always visible.
+- `columns` sets `grid-template-columns` of the node's child grid. A `number` is shorthand for `repeat(n, minmax(0, 1fr))`. Pass a `string` for any valid CSS value (e.g. `"200px 1fr 1fr"`). Falls back to `defaultColumns` (default `1`).
+- `span` makes the node span multiple columns in its parent grid. Maps to `gridColumn: span {n}`.
+- `rowSpan` makes the node span multiple rows in its parent grid. Maps to `gridRow: span {n}`.
+- `virtual` makes the node layout-only — no group wrapper is rendered, children are placed directly in the cell. Useful for root nodes that only provide a `columns` grid.
+- `gridStyle` passes additional CSS properties to the child grid container (e.g. `gridAutoRows`, `alignItems`). Merged after `columns`, `gap`, etc.
+- `cellStyle` passes additional CSS properties to the cell wrapper (e.g. `alignSelf`, `justifySelf`, `order`). Merged after `span` / `rowSpan`.
+- `data` is an arbitrary payload forwarded to render callbacks. Access it via `node.data` in `renderItem`/`renderGroup`.
 
-## Components
+## Usage
 
 ### NestedGrid
 
-The root component. Accepts a `nodes` array and renders the full nested grid.
+The root component. All props except `nodes` are optional.
 
 ```tsx
 <NestedGrid
@@ -83,196 +89,157 @@ The root component. Accepts a `nodes` array and renders the full nested grid.
   defaultColumns={3}
   groupGap={12}
   itemGap={8}
+  showContent
   onNodeClick={(node) => console.log(node.id)}
-  renderGroup={...}
-  renderItem={...}
+  theme={{ itemHoverBg: '#2563eb', itemHoverColor: '#fff' }}
 />
 ```
 
-### NestedGridItem
+`groupGap` / `itemGap` accept a single value or a `[row, column]` tuple. Every grid level auto-detects whether it contains groups or only items and picks the matching gap.
 
-The default leaf item. Content is hidden at rest and expands on hover. Exported so custom `renderItem` implementations can reuse it.
+### NestedGridGroup & NestedGridItem
 
-```tsx
-import { NestedGrid, NestedGridItem } from 'react-nested-grid'
-;<NestedGrid
-  nodes={nodes}
-  renderItem={({ node }) => (
-    <NestedGridItem node={node} showContent titleExtra={({ expanded }) => (expanded ? '▼' : '▶')} />
-  )}
-/>
-```
-
-| Prop          | Type                                       | Default  | Description                               |
-| ------------- | ------------------------------------------ | -------- | ----------------------------------------- |
-| `node`        | `NestedGridNode`                           | required | The node to render                        |
-| `titleExtra`  | `ReactNode \| ({ expanded }) => ReactNode` | —        | Content beside the title                  |
-| `showContent` | `boolean`                                  | `false`  | Always show content instead of hover-only |
-| `styles`      | `{ header?, body? }`                        | —        | Per-element inline styles                 |
-| `className`   | `string`                                   | —        | Additional CSS class                      |
-| `style`       | `CSSProperties`                            | —        | Inline styles                             |
-
-### NestedGridGroup
-
-The default group wrapper. Renders the group border, title header, and body area. Exported for use in custom `renderGroup` implementations.
+The default group and item components. Both support `theme`, `styles`, and standard HTML attributes.
 
 ```tsx
-import { NestedGrid, NestedGridGroup } from 'react-nested-grid'
-;<NestedGrid
+import { NestedGrid, NestedGridGroup, NestedGridItem } from 'react-nested-grid'
+
+<NestedGrid
   nodes={nodes}
   renderGroup={({ node, children, depth }) => (
-    <NestedGridGroup node={node} style={{ background: depth % 2 === 0 ? '#f8fafc' : '#ffffff' }}>
+    <NestedGridGroup node={node} styles={{ header: { borderBottom: '1px solid #ddd' } }}>
       {children}
     </NestedGridGroup>
   )}
+  renderItem={({ node }) => (
+    <NestedGridItem
+      node={node}
+      showContent
+      titleExtra={({ expanded }) => (expanded ? '▼' : '▶')}
+      styles={{ header: { writingMode: 'vertical-rl' } }}
+    />
+  )}
 />
 ```
 
-| Prop        | Type             | Description              |
-| ----------- | ---------------- | ------------------------ |
-| `node`      | `NestedGridNode` | The group node to render |
-| `children`  | `ReactNode`      | The rendered child grid  |
-| `styles`    | `{ header?, body? }`          | —                | Per-element inline styles |
-| `className` | `string`                      | —                | Additional CSS class      |
-| `style`     | `CSSProperties`               | —                | Inline styles             |
+| NestedGridItem props | Type | Description |
+|---|---|---|
+| `node` | `NestedGridNode` | The node to render |
+| `titleExtra` | `ReactNode \| ({ expanded }) => ReactNode` | Content beside the title |
+| `showContent` | `boolean` (default `false`) | Keep content always visible |
+| `styles` | `{ header?, body? }` | Inline styles for sub-elements |
+| `theme` | `NestedGridTheme` | Per-component theme override |
 
-### themeToVars
+| NestedGridGroup props | Type | Description |
+|---|---|---|
+| `node` | `NestedGridNode` | The group node |
+| `children` | `ReactNode` | The rendered child grid |
+| `styles` | `{ header?, body? }` | Inline styles for sub-elements |
+| `theme` | `NestedGridTheme` | Per-component theme override |
 
-`themeToVars(theme)` converts a `NestedGridTheme` to a CSS-variable style object. All built-in components use it internally — pass a `theme` prop to any of them to set/override variables at that level.
+Both extend `HTMLAttributes<HTMLDivElement>`, so `className`, `style`, `onClick`, etc. are also accepted.
 
-```tsx
-import { NestedGridGroup, themeToVars } from 'react-nested-grid'
-;<NestedGridGroup node={node} theme={{ groupBorder: '2px solid red' }}>
-  ...
-</NestedGridGroup>
-```
+### Custom Rendering
 
-## Custom Rendering
-
-Both `renderGroup` and `renderItem` let you replace the default rendering. They share a common shape:
+`renderGroup` and `renderItem` replace the default rendering. Both callbacks receive:
 
 ```ts
-{
-  node // the current node
-  depth // nesting depth (root = 0)
-  index // position within siblings
-  parent // parent node (undefined at root)
-  oriNode // the default rendered element
-}
+{ node, depth, index, parent, oriNode }
 ```
 
-`renderGroup` also receives `children` (the already-rendered child grid).
-
-Custom render results are placed inside a framework-managed wrapper div that handles grid placement (`gridColumn` span, `min-width`). You only need to focus on content and styling.
+`renderGroup` also receives `children` (the already-rendered child grid). `oriNode` is the default component — use it when you only need to add a wrapper.
 
 ```tsx
 <NestedGrid
   nodes={nodes}
-  renderGroup={({ node, children, depth, oriNode }) => (
-    <NestedGridGroup node={node} style={{ background: depth === 0 ? '#f0fdf4' : undefined }}>
-      {children}
-    </NestedGridGroup>
-  )}
   renderItem={({ node, oriNode }) => (
-    <a href={`/item/${node.id}`} style={{ textDecoration: 'none' }}>
-      {oriNode}
-    </a>
+    <a href={`/items/${node.id}`}>{oriNode}</a>
   )}
 />
 ```
 
-## Custom Design
+### Context & Utilities
+
+`useNestedGridContext()` returns `{ defaultColumns, groupGap, itemGap, theme, showContent, onNodeClick }` for building custom components.
+
+`themeToVars(theme)` converts a `NestedGridTheme` to a CSS-variable style object.
+
+## Styling
 
 ### Theme
 
-The `theme` prop is the recommended way to customize appearance. It accepts a flat object of CSS values, which are set as CSS custom properties on the root element and inherited by all children.
+The `theme` prop sets CSS custom properties, inherited by all descendants. Pass it on `NestedGrid`, `NestedGridGroup`, or `NestedGridItem` — the closest ancestor wins.
 
 ```tsx
-import { NestedGrid, type NestedGridTheme } from 'react-nested-grid'
+import { type NestedGridTheme } from 'react-nested-grid'
 
 const theme: NestedGridTheme = {
-  // Group
   groupBorder: 'none',
-  groupTitleColor: '#2563eb',
-  groupBgEven: '#eff6ff',
-  groupBgOdd: '#dbeafe',
+  groupBgEven: '#eef2ff',
+  groupBgOdd: '#e0e7ff',
+  groupTitleColor: '#4338ca',
 
-  // Item
   itemBorder: 'none',
-  itemShadow: '0 2px 6px rgb(0 0 0 / 6%)',
-  itemHoverBg: '#2563eb',
-  itemHoverColor: '#ffffff',
+  itemShadow: '0 1px 3px rgb(0 0 0 / 8%)',
+  itemHoverBg: '#4338ca',
+  itemHoverColor: '#fff',
 
-  // Content
   contentFontSize: '13px',
   contentColor: '#64748b',
   contentAnimDuration: '150ms',
 }
-
-<NestedGrid nodes={nodes} theme={theme} />
 ```
 
-| Theme key                    | CSS property             | Default             |
-| ---------------------------- | ------------------------ | ------------------- |
-| `groupBorder`                | `border`                 | `1px solid #e5e7eb` |
-| `groupBorderRadius`          | `border-radius`          | `8px`               |
-| `groupBg`                    | `background`             | —                   |
-| `groupBgEven` / `groupBgOdd` | `background`             | —                   |
-| `groupTitleColor`            | `color`                  | —                   |
-| `groupTitleFontSize`         | `font-size`              | —                   |
-| `groupTitleFontWeight`       | `font-weight`            | `600`               |
-| `groupPadding`               | `padding`                | `8px 16px`          |
-| `groupHeaderPadding`         | `padding`                | `0`                 |
-| `groupBodyPadding`           | `padding`                | `8px 0 0`           |
-| `itemBorder`                 | `border`                 | `1px solid #e5e7eb` |
-| `itemBorderRadius`           | `border-radius`          | `4px`               |
-| `itemBg`                     | `background`             | `#ffffff`           |
-| `itemShadow`                 | `box-shadow`             | —                   |
-| `itemPadding`                | `padding`                | `10px 12px`         |
-| `itemHoverBg`                | `background` (hover)     | `#f3f4f6`           |
-| `itemHoverColor`             | `color` (hover)          | —                   |
-| `itemTitleFontSize`          | `font-size`              | —                   |
-| `itemTitleFontWeight`        | `font-weight`            | `600`               |
-| `contentColor`               | `color`                  | —                   |
-| `contentFontSize`            | `font-size`              | `13px`              |
-| `contentLineHeight`          | `line-height`            | `20px`              |
-| `contentPaddingTop`          | `padding-top` (expanded) | `8px`               |
-| `contentAnimDuration`        | transition duration      | `200ms`             |
+All keys are prefixed with `--rng-` (e.g. `groupBgEven` → `--rng-group-bg-even`).
+
+| Group | CSS property | Default |
+|---|---|---|
+| `groupBorder` | `border` | `1px solid #e5e7eb` |
+| `groupBorderRadius` | `border-radius` | `8px` |
+| `groupBg` | `background` | — |
+| `groupBgEven` | `background` | — |
+| `groupBgOdd` | `background` | — |
+| `groupTitleColor` | `color` | — |
+| `groupTitleFontSize` | `font-size` | — |
+| `groupTitleFontWeight` | `font-weight` | `600` |
+| `groupPadding` | `padding` | `8px 16px` |
+| `groupHeaderPadding` | `padding` | `0` |
+| `groupBodyPadding` | `padding` | `8px 0 0` |
+
+| Item | CSS property | Default |
+|---|---|---|
+| `itemBorder` | `border` | `1px solid #e5e7eb` |
+| `itemBorderRadius` | `border-radius` | `4px` |
+| `itemBg` | `background` | `#ffffff` |
+| `itemShadow` | `box-shadow` | — |
+| `itemPadding` | `padding` | `10px 12px` |
+| `itemHoverBg` | `background` (hover) | `#f3f4f6` |
+| `itemHoverColor` | `color` (hover) | — |
+| `itemTitleFontSize` | `font-size` | — |
+| `itemTitleFontWeight` | `font-weight` | `600` |
+
+| Content | CSS property | Default |
+|---|---|---|
+| `contentColor` | `color` | — |
+| `contentFontSize` | `font-size` | `13px` |
+| `contentLineHeight` | `line-height` | `20px` |
+| `contentPaddingTop` | `padding-top` (expanded) | `8px` |
+| `contentAnimDuration` | transition duration | `200ms` |
 
 ### Depth Classes
 
-Every grid cell wrapper receives `rng-depth-{n}`, `rng-depth-even` (or `rng-depth-odd`) classes automatically, so you can style by nesting level without manual `className` logic.
+Every cell wrapper automatically gets `rng-depth-{n}`, `rng-depth-even` / `rng-depth-odd`.
 
 ```css
-/* first-level group border */
-.rng-depth-0 > .rng-group {
-  border-width: 2px;
-}
-
-/* alternating group backgrounds via depth classes */
-.rng-depth-even > .rng-group {
-  background: #f1f5f9;
-}
-.rng-depth-odd > .rng-group {
-  background: #ffffff;
-}
+.rng-depth-0 > .rng-group { border-width: 2px; }
+.rng-depth-even > .rng-group { background: #f1f5f9; }
 ```
 
-### CSS Class Overrides
+### Direct Class Overrides
 
-All components expose stable `rng-*` class names. Override them directly when you need control beyond what `theme` provides.
+Stable `rng-*` classes for anything `theme` doesn't cover:
 
 ```css
-.rng-item-title {
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.rng-item-body {
-  transition-duration: 150ms;
-}
-
-.rng-node {
-  min-width: 200px;
-}
+.rng-item-title { text-transform: uppercase; }
+.rng-node { min-width: 200px; }
 ```

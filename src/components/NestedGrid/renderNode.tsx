@@ -9,7 +9,11 @@ export interface NestedGridNodesProps<TData = unknown> {
   nodes: NestedGridNode<TData>[]
   depth: number
   parent?: NestedGridNode<TData>
-  parentColumns?: number
+  parentColumns?: number | string
+}
+
+function toGridTemplate(value: number | string): string {
+  return typeof value === 'number' ? `repeat(${value}, minmax(0, 1fr))` : value
 }
 
 export function NestedGridNodes<TData = unknown>({
@@ -18,8 +22,14 @@ export function NestedGridNodes<TData = unknown>({
   parent,
   parentColumns,
 }: NestedGridNodesProps<TData>) {
-  const { defaultColumns, groupGap, itemGap } = useNestedGridContext<TData>()
-  const columns = parentColumns || defaultColumns
+  const {
+    defaultColumns,
+    gridStyle: contextGridStyle,
+    groupGap,
+    itemGap,
+  } = useNestedGridContext<TData>()
+  const columns = toGridTemplate(parentColumns || defaultColumns)
+  const gridStyle = parent?.gridStyle ?? contextGridStyle
   const hasGroup = nodes.some((n) => hasChildren(n))
   const resolvedGap = hasGroup ? groupGap : itemGap
 
@@ -28,8 +38,9 @@ export function NestedGridNodes<TData = unknown>({
       className="rng-grid"
       style={
         {
-          gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
+          gridTemplateColumns: columns,
           ...(resolvedGap === undefined ? {} : { gap: resolvedGap }),
+          ...gridStyle,
         } as CSSProperties
       }
     >
@@ -52,6 +63,7 @@ function NodeRenderer<TData = unknown>({ node, depth, index, parent }: NodeRende
   const cellStyle: CSSProperties = {
     ...(node.span && { gridColumn: `span ${node.span}` }),
     ...(node.rowSpan && { gridRow: `span ${node.rowSpan}` }),
+    ...node.cellStyle,
   }
   const depthClass = `rng-depth-${depth} ${depth % 2 === 0 ? 'rng-depth-even' : 'rng-depth-odd'}`
   const cellClass = `rng-node ${depthClass}`

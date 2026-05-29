@@ -8,14 +8,13 @@ export interface ProductData {
 export const nodes: NestedGridNode<ProductData>[] = [
   {
     id: 'root',
-    columns: 8,
+    columns: '1fr 150px',
     virtual: true,
     children: [
       {
         id: 'mens',
         title: "Men's Collection",
         columns: 3,
-        span: 7,
         children: [
           {
             id: 'tops',
@@ -96,7 +95,6 @@ export const nodes: NestedGridNode<ProductData>[] = [
         id: 'womens',
         title: "Women's Collection",
         columns: 2,
-        span: 7,
         children: [
           {
             id: 'dresses',
@@ -141,7 +139,6 @@ export const nodes: NestedGridNode<ProductData>[] = [
         id: 'kids',
         title: "Kids' Collection",
         columns: 6,
-        span: 7,
         children: [
           {
             id: 'onesie',

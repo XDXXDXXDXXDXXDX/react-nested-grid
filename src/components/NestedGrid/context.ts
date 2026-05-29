@@ -3,6 +3,7 @@ import type { NestedGridProps, NestedGridTheme } from 'src/types'
 
 export interface NestedGridContextValue<TData = unknown> {
   defaultColumns: number
+  gridStyle?: CSSProperties
   groupGap?: CSSProperties['gap']
   itemGap?: CSSProperties['gap']
   theme?: NestedGridTheme

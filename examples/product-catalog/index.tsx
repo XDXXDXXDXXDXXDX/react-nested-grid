@@ -1,5 +1,5 @@
 import { NestedGrid, NestedGridItem } from 'react-nested-grid'
-import { nodes, type ProductData, tagColors } from './data'
+import { nodes, tagColors } from './data'
 
 export default function Example() {
   return (
@@ -21,7 +21,7 @@ export default function Example() {
       renderItem={({ node, parent }) => (
         <NestedGridItem
           node={node}
-          showContent={(node.data as ProductData)?.featured}
+          showContent={node.data?.featured}
           styles={
             parent?.id === 'highlights'
               ? {
@@ -34,9 +34,9 @@ export default function Example() {
               : undefined
           }
           titleExtra={
-            (node.data as ProductData)?.tag
+            node.data?.tag
               ? ({ expanded }) => {
-                  const c = tagColors[(node.data as ProductData).tag!]
+                  const c = tagColors[node.data!.tag!]
                   return (
                     <span
                       style={{
@@ -50,7 +50,7 @@ export default function Example() {
                         transition: 'opacity 150ms',
                       }}
                     >
-                      {(node.data as ProductData).tag}
+                      {node.data!.tag}
                     </span>
                   )
                 }

@@ -38,10 +38,12 @@ export interface NestedGridNode<TData = unknown> {
   title?: ReactNode
   content?: ReactNode
   children?: NestedGridNode<TData>[]
-  columns?: number
+  columns?: number | string
   span?: number
   rowSpan?: number
   virtual?: boolean
+  gridStyle?: CSSProperties
+  cellStyle?: CSSProperties
   data?: TData
 }
 
@@ -64,6 +66,7 @@ export interface NestedGridGroupRenderProps<TData = unknown> extends NestedGridR
 export interface NestedGridProps<TData = unknown> extends HTMLAttributes<HTMLDivElement> {
   nodes: NestedGridNode<TData>[]
   defaultColumns?: number
+  gridStyle?: CSSProperties
   groupGap?: number | string | [number | string, number | string]
   itemGap?: number | string | [number | string, number | string]
   theme?: NestedGridTheme

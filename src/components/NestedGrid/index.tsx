@@ -9,6 +9,7 @@ const DEFAULT_COLUMNS = 1
 export function NestedGrid<TData = unknown>({
   nodes,
   defaultColumns = DEFAULT_COLUMNS,
+  gridStyle,
   groupGap,
   itemGap,
   theme,
@@ -22,6 +23,7 @@ export function NestedGrid<TData = unknown>({
 }: NestedGridProps<TData>) {
   const contextValue: NestedGridContextValue<TData> = {
     defaultColumns,
+    gridStyle,
     groupGap: toCssSize(groupGap),
     itemGap: toCssSize(itemGap),
     theme,
